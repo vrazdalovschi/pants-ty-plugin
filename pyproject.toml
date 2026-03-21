@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pants-ty"
+version = "0.1.0"
+description = "A Pants check backend for the Astral ty Python type checker."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Vasile Razdalovschi"}]
+dependencies = ["pantsbuild.pants>=2.31,<2.32"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Software Development :: Build Tools",
+]
+
+[project.urls]
+Repository = "https://github.com/vrazdalovschi/pants-ty-plugin"
+Issues = "https://github.com/vrazdalovschi/pants-ty-plugin/issues"
+
+[tool.setuptools]
+package-dir = {"" = "pants-plugins"}
+
+[tool.setuptools.packages.find]
+where = ["pants-plugins"]
+include = ["pants_ty*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [".git", ".pants.d", "build", "dist"]

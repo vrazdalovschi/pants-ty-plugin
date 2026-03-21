@@ -1,0 +1,24 @@
+[GLOBAL]
+pants_version = "2.31.0"
+backend_packages = [
+  "pants.backend.python",
+  "pants.backend.plugin_development",
+  "pants_ty",
+]
+pythonpath = ["%(buildroot)s/pants-plugins"]
+
+[source]
+root_patterns = [
+  "/pants-plugins",
+  "/tests",
+]
+
+[python]
+enable_resolves = true
+interpreter_constraints = ["==3.11.*"]
+
+[python.resolves]
+pants-plugins = "pants-plugins/lock.txt"
+
+[python.resolves_to_interpreter_constraints]
+pants-plugins = ["==3.11.*"]

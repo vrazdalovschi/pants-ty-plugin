@@ -1,0 +1,58 @@
+name: Pants CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      PANTS_CONFIG_FILES: pants.ci.toml
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: pantsbuild/actions/init-pants@v10
+        with:
+          gha-cache-key: v0-py311
+          named-caches-hash: ${{ hashFiles('pants-plugins/lock.txt') }}
+
+      - name: Bootstrap Pants
+        run: pants --version
+
+      - name: Install lint and build tools
+        run: python -m pip install --upgrade build ruff
+
+      - name: Check BUILD files
+        run: "pants update-build-files --check ::"
+
+      - name: Lint
+        run: ruff check pants-plugins tests
+
+      - name: Test
+        run: 'PANTS_LAUNCHER="${HOME}/.local/bin/pants" pants test ::'
+
+      - name: Typecheck
+        run: "pants check ::"
+
+      - name: Build package
+        run: python -m build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Upload Pants log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pants-log
+          path: .pants.d/pants.log
