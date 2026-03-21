@@ -21,7 +21,34 @@ That means `ty` can resolve imports that Pants already knows about.
 
 ## Install
 
-### Option 1: vendor the plugin into a private repo
+### Option 1: install from PyPI through Pants
+
+The recommended installation path is to use the published package from PyPI:
+
+- PyPI: https://pypi.org/project/pants-ty/
+
+Add the plugin to your repo's Pants config:
+
+```toml
+[GLOBAL]
+plugins = ["pants-ty==0.1.1"]
+backend_packages = [
+  "pants.backend.python",
+  "pants_ty",
+]
+```
+
+Pants installs published plugins separately from your code resolves. Do not add `pants-ty`
+to a resolve, lockfile, or `python_requirement`.
+
+Then add your `ty.toml` or `[tool.ty]` config and run:
+
+```bash
+pants help ty
+pants check --only=ty ::
+```
+
+### Option 2: vendor the plugin into a private repo
 
 Copy only the Python package files from `pants-plugins/pants_ty/` into your repo's
 `pants-plugins/pants_ty/` directory:
@@ -63,19 +90,6 @@ UnrecognizedResolveNamesError: ... resolve ... pants-plugins
 
 That means your consuming repo picked up this repo's internal development resolve. Remove the
 copied `BUILD` files and keep only the plugin Python modules.
-
-### Option 2: install as a published plugin
-
-Once the package is published, use:
-
-```toml
-[GLOBAL]
-plugins = ["pants-ty==0.1.0"]
-backend_packages = [
-  "pants.backend.python",
-  "pants_ty",
-]
-```
 
 ## Configure
 
@@ -134,7 +148,7 @@ python -m build
 After you configure PyPI trusted publishing for this repository, you can cut a release with:
 
 ```bash
-scripts/release.sh 0.1.1
+scripts/release.sh 0.1.2
 ```
 
 The script will:
@@ -144,15 +158,15 @@ The script will:
 - update the version in `pyproject.toml`
 - update `pants-plugins/pants_ty/__init__.py`
 - create a release commit
-- create an annotated tag like `v0.1.1`
+- create an annotated tag like `v0.1.2`
 - push `main`
 - push the tag
 
 Useful flags:
 
 ```bash
-scripts/release.sh --dry-run 0.1.1
-scripts/release.sh --skip-checks 0.1.1
+scripts/release.sh --dry-run 0.1.2
+scripts/release.sh --skip-checks 0.1.2
 ```
 
 ## Repository layout
