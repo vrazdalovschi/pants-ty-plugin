@@ -93,12 +93,23 @@ copied `BUILD` files and keep only the plugin Python modules.
 
 ## Configure
 
-Create either `ty.toml` or add `[tool.ty]` to `pyproject.toml`.
+Ty's own configuration must live in either:
+
+- `ty.toml`
+- `pyproject.toml` under `[tool.ty]`
+
+Do not put `[tool.ty]` in `pants.toml`. Pants options go under `[ty]`.
 
 Example:
 
 ```toml
 [tool.ty]
+exclude = [".pants.d", "dist"]
+```
+
+Or in a dedicated `ty.toml`:
+
+```toml
 exclude = [".pants.d", "dist"]
 ```
 
@@ -108,6 +119,13 @@ Pants exposes the plugin options under `[ty]`:
 [ty]
 args = ["--output-format=concise"]
 config_discovery = true
+```
+
+If your `ty.toml` lives somewhere else in the repo, point Pants at it explicitly:
+
+```toml
+[ty]
+config = "config/python/ty.toml"
 ```
 
 Useful commands:
