@@ -129,6 +129,32 @@ To build a distributable wheel and sdist:
 python -m build
 ```
 
+### Automated releases
+
+After you configure PyPI trusted publishing for this repository, you can cut a release with:
+
+```bash
+scripts/release.sh 0.1.1
+```
+
+The script will:
+
+- require a clean `main` branch
+- run `ruff check pants-plugins tests`, `pants test ::`, and `pants check ::`
+- update the version in `pyproject.toml`
+- update `pants-plugins/pants_ty/__init__.py`
+- create a release commit
+- create an annotated tag like `v0.1.1`
+- push `main`
+- push the tag
+
+Useful flags:
+
+```bash
+scripts/release.sh --dry-run 0.1.1
+scripts/release.sh --skip-checks 0.1.1
+```
+
 ## Repository layout
 
 - `pants-plugins/pants_ty`: plugin source
