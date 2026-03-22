@@ -18,6 +18,8 @@ from pants.option.option_types import (
 )
 from pants.util.strutil import softwrap
 
+from pants_ty.known_versions import DEFAULT_URL_PLATFORM_MAPPING, DEFAULT_URL_TEMPLATE
+
 
 class Ty(TemplatedExternalTool):
     options_scope = "ty"
@@ -35,15 +37,8 @@ class Ty(TemplatedExternalTool):
         "0.0.24|macos_arm64|91709778a139350dc890e6048b042bc0800b04f1cb0cd4a636af22673fa84c1a|9323636",
         "0.0.24|macos_x86_64|3c0f93d0b578b556f4a7765714f6e875f836f8f0d0111fdc786b2adc79110a4d|9957953",
     ]
-    default_url_template = (
-        "https://github.com/astral-sh/ty/releases/download/{version}/ty-{platform}.tar.gz"
-    )
-    default_url_platform_mapping = {
-        "linux_arm64": "aarch64-unknown-linux-musl",
-        "linux_x86_64": "x86_64-unknown-linux-musl",
-        "macos_arm64": "aarch64-apple-darwin",
-        "macos_x86_64": "x86_64-apple-darwin",
-    }
+    default_url_template = DEFAULT_URL_TEMPLATE
+    default_url_platform_mapping = DEFAULT_URL_PLATFORM_MAPPING
 
     skip = SkipOption("check")
     args = ArgsListOption(example="--error-on-warning --output-format=concise")

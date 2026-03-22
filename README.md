@@ -128,6 +128,48 @@ If your `ty.toml` lives somewhere else in the repo, point Pants at it explicitly
 config = "config/python/ty.toml"
 ```
 
+### Overriding the Ty binary version
+
+You do not need a new `pants-ty` release for every new `ty` release.
+
+From a checkout of this repo, generate a ready-to-paste config block:
+
+```bash
+./scripts/generate_known_versions.py 0.0.25
+```
+
+That prints:
+
+```toml
+[ty]
+version = "0.0.25"
+known_versions = [
+  "0.0.25|linux_arm64|<sha256>|<size>",
+  "0.0.25|linux_x86_64|<sha256>|<size>",
+  "0.0.25|macos_arm64|<sha256>|<size>",
+  "0.0.25|macos_x86_64|<sha256>|<size>",
+]
+```
+
+Paste that block into the consuming repo's `pants.toml`.
+
+Useful options:
+
+```bash
+./scripts/generate_known_versions.py 0.0.25 --platform macos_arm64 --platform linux_x86_64
+./scripts/generate_known_versions.py 0.0.25 --entries-only
+```
+
+Each `known_versions` entry is `version|platform|sha256|length`. By default the script uses
+Astral's official GitHub release archives.
+
+You only need to do this when you want to upgrade the downloaded `ty` binary without changing
+the plugin code. If a new `ty` release requires backend changes, then release a new
+`pants-ty` version.
+
+Run `pants help-advanced ty` to see the full option shape, including `url_template` and
+`url_platform_mapping`.
+
 Useful commands:
 
 ```bash
@@ -190,6 +232,7 @@ scripts/release.sh --skip-checks 0.1.2
 ## Repository layout
 
 - `pants-plugins/pants_ty`: plugin source
+- `scripts/generate_known_versions.py`: helper to generate `[ty].known_versions` overrides
 - `tests/pants_ty`: unit and integration tests
 - `pants.toml`: local development config
 - `pants.ci.toml`: CI-specific Pants settings
