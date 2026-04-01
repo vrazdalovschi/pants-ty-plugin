@@ -78,7 +78,7 @@ def create_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Generate Pants [ty].known_versions entries for a ty release.",
     )
-    parser.add_argument("version", help="ty version to inspect, for example 0.0.25")
+    parser.add_argument("version", help="ty version to inspect, for example 0.0.27")
     parser.add_argument(
         "--platform",
         dest="platforms",

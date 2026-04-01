@@ -47,3 +47,7 @@ class TySubsystemTest(unittest.TestCase):
             platform_keys,
             {"linux_arm64", "linux_x86_64", "macos_arm64", "macos_x86_64"},
         )
+
+    def test_known_versions_match_default_version(self) -> None:
+        versions = {entry.split("|")[0] for entry in Ty.default_known_versions}
+        self.assertEqual(versions, {Ty.default_version})

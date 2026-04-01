@@ -31,7 +31,7 @@ Add the plugin to your repo's Pants config:
 
 ```toml
 [GLOBAL]
-plugins = ["pants-ty==0.1.1"]
+plugins = ["pants-ty==0.1.2"]
 backend_packages = [
   "pants.backend.python",
   "pants_ty",
@@ -135,19 +135,19 @@ You do not need a new `pants-ty` release for every new `ty` release.
 From a checkout of this repo, generate a ready-to-paste config block:
 
 ```bash
-./scripts/generate_known_versions.py 0.0.25
+./scripts/generate_known_versions.py 0.0.27
 ```
 
 That prints:
 
 ```toml
 [ty]
-version = "0.0.25"
+version = "0.0.27"
 known_versions = [
-  "0.0.25|linux_arm64|<sha256>|<size>",
-  "0.0.25|linux_x86_64|<sha256>|<size>",
-  "0.0.25|macos_arm64|<sha256>|<size>",
-  "0.0.25|macos_x86_64|<sha256>|<size>",
+  "0.0.27|linux_arm64|<sha256>|<size>",
+  "0.0.27|linux_x86_64|<sha256>|<size>",
+  "0.0.27|macos_arm64|<sha256>|<size>",
+  "0.0.27|macos_x86_64|<sha256>|<size>",
 ]
 ```
 
@@ -156,8 +156,8 @@ Paste that block into the consuming repo's `pants.toml`.
 Useful options:
 
 ```bash
-./scripts/generate_known_versions.py 0.0.25 --platform macos_arm64 --platform linux_x86_64
-./scripts/generate_known_versions.py 0.0.25 --entries-only
+./scripts/generate_known_versions.py 0.0.27 --platform macos_arm64 --platform linux_x86_64
+./scripts/generate_known_versions.py 0.0.27 --entries-only
 ```
 
 Each `known_versions` entry is `version|platform|sha256|length`. By default the script uses
