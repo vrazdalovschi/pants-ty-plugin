@@ -2,6 +2,8 @@
 pants_version = "2.31.0"
 backend_packages = [
   "pants.backend.python",
+  "pants.backend.experimental.python",
+  "pants.backend.experimental.python.lint.ruff.check",
   "pants.backend.plugin_development",
   "pants_ty",
 ]

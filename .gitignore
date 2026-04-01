@@ -1,10 +1,11 @@
 .pants.d/
+.venv/
 .pytest_cache/
 .ruff_cache/
+.mise.local.toml
 dist/
 build/
 *.egg-info/
 __pycache__/
 *.pyc
 .DS_Store
-

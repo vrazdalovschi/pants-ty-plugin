@@ -18,6 +18,10 @@ die() {
   exit 1
 }
 
+require_command() {
+  command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
+}
+
 run() {
   if [ "$DRY_RUN" = "1" ]; then
     printf '+'
@@ -85,14 +89,16 @@ if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; the
 fi
 
 if [ "$SKIP_CHECKS" = "0" ]; then
-  run ruff check pants-plugins tests
-  run pants test ::
+  require_command pants
+  run pants lint ::
+  run pants "--test-extra-env-vars=['PANTS_LAUNCHER=$(command -v pants)']" test ::
   run pants check ::
 fi
 
 if [ "$DRY_RUN" = "1" ]; then
   echo "Would update pyproject.toml and pants-plugins/pants_ty/__init__.py to version $VERSION"
 else
+  require_command python3
   python3 - "$VERSION" <<'PY'
 from pathlib import Path
 import re
