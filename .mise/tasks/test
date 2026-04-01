@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+[ -n "$(command -v pants || true)" ] || {
+  echo "missing Pants launcher on PATH; install it from https://www.pantsbuild.org/dev/docs/getting-started/installing-pants" >&2
+  exit 1
+}
+
+pants "--test-extra-env-vars=['PANTS_LAUNCHER=$(command -v pants)']" test ::

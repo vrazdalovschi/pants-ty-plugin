@@ -187,13 +187,41 @@ python_sources(
 )
 ```
 
+## Setup
+
+This repo expects `mise` and `pants` to already be installed:
+
+- `mise`: https://mise.jdx.dev/installing-mise.html
+- `pants`: https://www.pantsbuild.org/dev/docs/getting-started/installing-pants
+
+The `mise` tasks use the installed Pants launcher directly, while `mise` manages the repo-local
+Python version used for packaging and helper scripts.
+
 ## Development
 
-This repo uses Pants to lint, test, and dogfood the plugin itself.
+This repo uses [`mise`](https://mise.jdx.dev/) to install local development tools and provide
+task entrypoints for linting, testing, and releases.
 
 ```bash
-ruff check pants-plugins tests
-pants test ::
+mise install
+mise run lint
+mise run test
+mise run check
+mise run verify
+```
+
+The repository-managed tools currently include:
+
+- `python 3.11.14`
+
+`mise run test` passes `PANTS_LAUNCHER=$(command -v pants)` into the Pants-managed test process
+so the integration tests can invoke the same installed Pants launcher inside the test sandbox.
+
+If you prefer to run the underlying commands directly, the task mapping is:
+
+```bash
+pants lint ::
+pants "--test-extra-env-vars=['PANTS_LAUNCHER=$(command -v pants)']" test ::
 pants check ::
 ```
 
@@ -208,13 +236,15 @@ python -m build
 After you configure PyPI trusted publishing for this repository, you can cut a release with:
 
 ```bash
-scripts/release.sh 0.1.2
+mise install
+mise run release 0.1.2
 ```
 
-The script will:
+The release task wraps `scripts/release.sh` and uses the repo-managed `python` tooling from
+`mise` plus your installed `pants` launcher. The script will:
 
 - require a clean `main` branch
-- run `ruff check pants-plugins tests`, `pants test ::`, and `pants check ::`
+- run `pants lint ::`, `pants test ::`, and `pants check ::`
 - update the version in `pyproject.toml`
 - update `pants-plugins/pants_ty/__init__.py`
 - create a release commit
@@ -225,13 +255,15 @@ The script will:
 Useful flags:
 
 ```bash
-scripts/release.sh --dry-run 0.1.2
-scripts/release.sh --skip-checks 0.1.2
+mise run release-dry-run 0.1.2
+mise run release -- --skip-checks 0.1.2
 ```
 
 ## Repository layout
 
 - `pants-plugins/pants_ty`: plugin source
+- `.mise/tasks`: local development and release task wrappers
+- `mise.toml`: repo-managed tool versions
 - `scripts/generate_known_versions.py`: helper to generate `[ty].known_versions` overrides
 - `tests/pants_ty`: unit and integration tests
 - `pants.toml`: local development config
