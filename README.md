@@ -31,7 +31,7 @@ Add the plugin to your repo's Pants config:
 
 ```toml
 [GLOBAL]
-plugins = ["pants-ty==0.1.2"]
+plugins = ["pants-ty==0.1.3"]
 backend_packages = [
   "pants.backend.python",
   "pants_ty",
@@ -135,19 +135,19 @@ You do not need a new `pants-ty` release for every new `ty` release.
 From a checkout of this repo, generate a ready-to-paste config block:
 
 ```bash
-./scripts/generate_known_versions.py 0.0.27
+./scripts/generate_known_versions.py 0.0.28
 ```
 
 That prints:
 
 ```toml
 [ty]
-version = "0.0.27"
+version = "0.0.28"
 known_versions = [
-  "0.0.27|linux_arm64|<sha256>|<size>",
-  "0.0.27|linux_x86_64|<sha256>|<size>",
-  "0.0.27|macos_arm64|<sha256>|<size>",
-  "0.0.27|macos_x86_64|<sha256>|<size>",
+  "0.0.28|linux_arm64|<sha256>|<size>",
+  "0.0.28|linux_x86_64|<sha256>|<size>",
+  "0.0.28|macos_arm64|<sha256>|<size>",
+  "0.0.28|macos_x86_64|<sha256>|<size>",
 ]
 ```
 
@@ -156,8 +156,8 @@ Paste that block into the consuming repo's `pants.toml`.
 Useful options:
 
 ```bash
-./scripts/generate_known_versions.py 0.0.27 --platform macos_arm64 --platform linux_x86_64
-./scripts/generate_known_versions.py 0.0.27 --entries-only
+./scripts/generate_known_versions.py 0.0.28 --platform macos_arm64 --platform linux_x86_64
+./scripts/generate_known_versions.py 0.0.28 --entries-only
 ```
 
 Each `known_versions` entry is `version|platform|sha256|length`. By default the script uses
@@ -237,7 +237,7 @@ After you configure PyPI trusted publishing for this repository, you can cut a r
 
 ```bash
 mise install
-mise run release 0.1.2
+mise run release 0.1.3
 ```
 
 The release task wraps `scripts/release.sh` and uses the repo-managed `python` tooling from
@@ -248,15 +248,15 @@ The release task wraps `scripts/release.sh` and uses the repo-managed `python` t
 - update the version in `pyproject.toml`
 - update `pants-plugins/pants_ty/__init__.py`
 - create a release commit
-- create an annotated tag like `v0.1.2`
+- create an annotated tag like `v0.1.3`
 - push `main`
 - push the tag
 
 Useful flags:
 
 ```bash
-mise run release-dry-run 0.1.2
-mise run release -- --skip-checks 0.1.2
+mise run release-dry-run 0.1.3
+mise run release -- --skip-checks 0.1.3
 ```
 
 ## Repository layout
