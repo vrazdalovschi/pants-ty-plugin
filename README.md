@@ -132,11 +132,14 @@ config = "config/python/ty.toml"
 
 You do not need a new `pants-ty` release for every new `ty` release.
 
-From a checkout of this repo, generate a ready-to-paste config block:
+From a checkout of this repo, generate a ready-to-paste config block using the repo helper script:
 
 ```bash
 ./scripts/generate_known_versions.py 0.0.28
 ```
+
+The script is the source of truth for `known_versions` values. Do not hand-edit hashes/sizes or pull them via
+other endpoints when preparing an update.
 
 That prints:
 
@@ -158,6 +161,13 @@ Useful options:
 ```bash
 ./scripts/generate_known_versions.py 0.0.28 --platform macos_arm64 --platform linux_x86_64
 ./scripts/generate_known_versions.py 0.0.28 --entries-only
+```
+
+Release checklist shortcut:
+
+```bash
+./scripts/generate_known_versions.py <ty_version> > /tmp/ty-version.toml
+cat /tmp/ty-version.toml
 ```
 
 Each `known_versions` entry is `version|platform|sha256|length`. By default the script uses
