@@ -11,5 +11,7 @@
   - update `Ty.default_version` and `Ty.default_known_versions` in
     `pants-plugins/pants_ty/subsystem.py`
   - adjust README version examples.
+  - include the upstream Ty release link in the PR body (for example
+    `https://github.com/astral-sh/ty/releases/tag/<ty_version>`).
 
 This file is intentionally small and workflow-only to keep repeated release bumps minimal.
