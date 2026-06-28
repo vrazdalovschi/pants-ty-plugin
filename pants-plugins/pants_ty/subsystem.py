@@ -30,12 +30,12 @@ class Ty(TemplatedExternalTool):
         """
     )
 
-    default_version = "0.0.50"
+    default_version = "0.0.55"
     default_known_versions = [
-        "0.0.50|linux_arm64|a6fb49c600ada6cb35b0da4f024eb4857dfec284aa62c875672c53ea2d6d51ec|11052738",
-        "0.0.50|linux_x86_64|1a273e8ab617626e933d6ca3b64589d76e4694b46e7b5091b4f45b625739d70a|11974020",
-        "0.0.50|macos_arm64|0622979e11dd3ecda875b8f3c110258b5428bd3065bb125ebf9f143b6fc7db89|10589201",
-        "0.0.50|macos_x86_64|0ddb65926daa97a6d07840492690506211adf591d69401eb1d95f8b1c08023e8|11345806",
+        "0.0.55|linux_arm64|a002a950a7e7ae1bc07a275b992414f4e2b001e8c46ac86c6e1086496e799701|10959082",
+        "0.0.55|linux_x86_64|654d2c98d65419aedeac57cf29ca8d60ee1798abd6d9f9a6a1789c50b76261e5|11780419",
+        "0.0.55|macos_arm64|877d3b410f233bcc5746332ac999a3c94e4afab6fbd488b0712f971bbe590115|10495164",
+        "0.0.55|macos_x86_64|9dd2cd9041ca5d4bd44516ce71b9768bb289c3baa2c9bd65283d25cde7901df8|11118544",
     ]
     default_url_template = DEFAULT_URL_TEMPLATE
     default_url_platform_mapping = DEFAULT_URL_PLATFORM_MAPPING
